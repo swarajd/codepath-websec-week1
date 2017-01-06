@@ -57,6 +57,8 @@
       array_push($errors, 'first name missing');
     } elseif (!has_length($first_name, ['min' => 2, 'max' => 255])) {
       array_push($errors, 'first name of incorrect length (should be between 2 and 255 chars)');
+    } elseif (preg_match('/^[a-zA-Z0-9 .,\'\-]+$/i', $first_name) == 0) {
+      array_push($errors, 'first name has incorrect characters');
     }
 
     // check/validate last name
@@ -64,6 +66,8 @@
       array_push($errors, 'last name missing');
     } elseif (!has_length($last_name, ['min' => 2, 'max' => 255])) {
       array_push($errors, 'last name of incorrect length (should be between 2 and 255 chars)');
+    } elseif (preg_match('/^[a-zA-Z0-9 .,\'\-]+$/i', $last_name) === 0) {
+      array_push($errors, 'last name has incorrect characters');
     }
 
     // check/validate email
@@ -71,6 +75,8 @@
       array_push($errors, 'email missing');
     } elseif (!has_valid_email_format($email)) {
       array_push($errors, 'the email was not formatted correctly');
+    } elseif (preg_match('/^[a-zA-Z0-9_@.]+$/i', $email) === 0) {
+      array_push($errors, 'email has incorrect characters');
     }
 
     // check/validate username
@@ -78,6 +84,19 @@
       array_push($errors, 'username missing');
     } elseif (!has_length($username, ['min' => 8, 'max' => 255])) {
       array_push($errors, 'username of incorrect length (should be between 8 and 255 chars)');
+    } elseif (preg_match('/^[a-zA-Z0-9_]+$/i', $username) === 0) {
+      array_push($errors, 'username has incorrect characters');
+    } else {
+      $sql = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
+      $result = db_query($db, $sql);
+      if ($result) {
+        if ($result->num_rows === 1) {
+          array_push($errors, 'username is taken');
+        }
+      } else {
+        echo db_error($db);
+      }
+
     }
 
     /* 
