@@ -123,6 +123,9 @@
         db_close($db);
         exit;
       }
+
+      //cleanup
+      unset($result);
       
     }
 
