@@ -55,6 +55,7 @@ The following advanced user stories are optional:
 Here's a walkthrough of implemented user stories:
 
 <img src='http://i.imgur.com/vzak8FN.gifv' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+(this is a gifv^ and github doesn't support gifv so I guess just click it to view)
 
 GIF created with gtk-screenrecorder and ImageMagick ._. (because linux lives matter too).
 
